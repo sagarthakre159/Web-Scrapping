@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Color and Logo Scraper</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Website Color and Logo Scraper</h1>
+        <form method="post">
+            <label for="website_url">Enter Website URL:</label>
+            <input type="url" id="website_url" name="website_url" required>
+            <button type="submit">Scrape</button>
+        </form>
+        
+        {% if logo_url %}
+        <div class="results">
+            <h2>Logo URL</h2>
+            <p><a href="{{ logo_url }}" target="_blank">{{ logo_url }}</a></p>
+            <h2>Primary Colors</h2>
+            <ul>
+                {% for color, count in primary_colors %}
+                <li style="background-color: {{ color }};"><span>{{ color }}</span></li>
+                {% endfor %}
+            </ul>
+            <h2>Button Colors</h2>
+            <ul>
+                {% for color in button_colors %}
+                <li style="background-color: {{ color }};"><span>{{ color }}</span></li>
+                {% endfor %}
+            </ul>
+            <h2>Recommended Complementary Color</h2>
+            {% if recommended_colors|length > 1 %}
+            <ul>
+            <li style="background-color: {{ recommended_colors[1][1] }};">Complementary Color:{{ recommended_colors[1][1] }}</li>
+            </ul>
+            {% else %}
+            <p>No second complementary color available.</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
